@@ -7,6 +7,7 @@ import { getColoredStyle } from '../../../utils/getColoredStyle';
 import { BaseItemElement } from './BaseItemElement';
 import { classMap } from 'lit/directives/class-map.js';
 import { daysTill } from '../../../utils/daysTill';
+import { handleAction } from '../../../utils/actionHandler';
 
 @customElement(`${TRASH_CARD_NAME}-item-chip`)
 class ItemChip extends BaseItemElement {
@@ -53,6 +54,10 @@ class ItemChip extends BaseItemElement {
         class=${classMap(cssClasses)}
         .iconOnly=${!with_label && !content}
         .label=${with_label ? item.label : nothing}
+        @click=${() => {
+          const entityId = (this.item as any)?.content?.entity ?? undefined;
+          handleAction((this as unknown) as HTMLElement, this.hass as any, this.config?.tap_action as any, entityId);
+        }}
       >
         ${pictureUrl ?
     html`<img slot="icon" src=${pictureUrl} aria-hidden />` :
@@ -70,7 +75,11 @@ class ItemChip extends BaseItemElement {
       css`
         img[slot="icon"] {
           object-fit: contain;
-        `
+        }
+        ha-badge {
+          cursor: pointer;
+        }
+      `
     ];
   }
 }

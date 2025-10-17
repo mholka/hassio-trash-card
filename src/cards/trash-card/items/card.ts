@@ -4,6 +4,7 @@ import { getDateString } from '../../../utils/getDateString';
 import { customElement } from 'lit/decorators.js';
 import { TRASH_CARD_NAME } from '../const';
 import { defaultHaCardStyle } from '../../../utils/defaultHaCardStyle';
+import { handleAction } from '../../../utils/actionHandler';
 import { getColoredStyle } from '../../../utils/getColoredStyle';
 import { BaseItemElement } from './BaseItemElement';
 import { daysTill } from '../../../utils/daysTill';
@@ -42,7 +43,11 @@ class ItemCard extends BaseItemElement {
     const contentClasses = { vertical: layout === 'vertical' };
 
     return html`
-      <ha-card style=${styleMap(style)} class=${classMap(cssClasses)}>
+      <ha-card style=${styleMap(style)} class=${classMap(cssClasses)} @click=${() => {
+        // try to use entity from the item content if present
+        const entityId = (this.item as any)?.content?.entity ?? undefined;
+        handleAction((this as unknown) as HTMLElement, this.hass as any, this.config?.tap_action as any, entityId);
+      }}>
         <div class="background" aria-labelledby="info" ></div>
         <div class="container">
           <div class="content ${classMap(contentClasses)}" >
@@ -106,7 +111,8 @@ class ItemCard extends BaseItemElement {
           flex: 1;
           min-width: 0;
           box-sizing: border-box;
-          pointer-events: none;
+          pointer-events: auto;
+          cursor: pointer;
           gap: 10px;
         }
         .vertical {

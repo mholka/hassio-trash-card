@@ -67,6 +67,9 @@ interface TrashCardConfig {
   layout: any;
   type: string;
   only_all_day_events?: boolean;
+  // Home Assistant action config (tap/hold)
+  tap_action?: any;
+  hold_action?: any;
 }
 
  type CardStyleConfig = Pick<TrashCardConfig, 'hide_time_range' | 'day_style' | 'day_style_format' | 'layout' | 'color_mode' | 'icon_size' | 'with_label'>;
