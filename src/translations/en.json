@@ -53,7 +53,8 @@
             "tabs": {
                 "settings": "Settings",
                 "appearance": "Appearance",
-                "patterns": "Patterns"
+                "patterns": "Patterns",
+                "interactions": "Interactions"
             },
             "refresh_rate": {
                 "title": "Update interval",

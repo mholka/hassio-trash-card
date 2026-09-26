@@ -53,7 +53,8 @@
             "tabs": {
                 "settings": "Nastavenia",
                 "appearance": "Vzhľad",
-                "patterns": "Pattern"
+                "patterns": "Pattern",
+                "interactions": "Interakcie"
             },
             "refresh_rate": {
                 "title": "Interval realizácie",

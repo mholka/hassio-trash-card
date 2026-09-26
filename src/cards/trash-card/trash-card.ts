@@ -41,6 +41,10 @@ const configDefaults = {
   hold_action: {
     action: 'more-info'
   },
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  double_tap_action: {
+    action: 'none'
+  },
   with_label: true,
   debug: false
 };

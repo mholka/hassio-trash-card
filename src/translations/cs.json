@@ -53,7 +53,8 @@
             "tabs": {
                 "settings": "Nastavení",
                 "appearance": "Vzhled",
-                "patterns": "Vzory"
+                "patterns": "Vzory",
+                "interactions": "Interakce"
             },
             "refresh_rate": {
                 "title": "Interval aktualizace",

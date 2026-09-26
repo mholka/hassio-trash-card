@@ -1,7 +1,8 @@
-import { array, assign, boolean, integer, literal, object, optional, string, union } from 'superstruct';
+import { array, assign, boolean, integer, literal, object, optional, string, type, union } from 'superstruct';
 import { defaultConfigStruct } from '../../utils/form/defaultConfigStruct';
 
 import type { ItemSettings } from '../../utils/itemSettings';
+import type { ActionConfig } from '../../utils/handleAction';
 
 const LAYOUTS = [
   'default',
@@ -67,9 +68,16 @@ interface TrashCardConfig {
   layout: any;
   type: string;
   only_all_day_events?: boolean;
+  tap_action?: ActionConfig;
+  hold_action?: ActionConfig;
+  double_tap_action?: ActionConfig;
 }
 
  type CardStyleConfig = Pick<TrashCardConfig, 'hide_time_range' | 'day_style' | 'day_style_format' | 'layout' | 'color_mode' | 'icon_size' | 'with_label'>;
+
+const actionConfigStruct = type({
+  action: string()
+});
 
 const entityCardConfigStruct = assign(
   defaultConfigStruct,
@@ -97,6 +105,9 @@ const entityCardConfigStruct = assign(
     icon_size: optional(integer()),
     with_label: optional(boolean()),
     only_all_day_events: optional(boolean()),
+    tap_action: optional(actionConfigStruct),
+    hold_action: optional(actionConfigStruct),
+    double_tap_action: optional(actionConfigStruct),
     pattern: optional(array(
       object({
         color: optional(string()),

@@ -7,6 +7,7 @@ import { getColoredStyle } from '../../../utils/getColoredStyle';
 import { BaseItemElement } from './BaseItemElement';
 import { classMap } from 'lit/directives/class-map.js';
 import { daysTill } from '../../../utils/daysTill';
+import { actionHandler } from '../../../utils/actionHandler';
 
 @customElement(`${TRASH_CARD_NAME}-item-chip`)
 class ItemChip extends BaseItemElement {
@@ -45,7 +46,7 @@ class ItemChip extends BaseItemElement {
 
     return html`
       <ha-badge
-        .type="badge"
+        .type=${this.hasAnyAction() ? 'button' : 'badge'}
         .hass=${this.hass}
         .config=${badgeConfig}
         .imageStyle=${'square'}
@@ -53,6 +54,8 @@ class ItemChip extends BaseItemElement {
         class=${classMap(cssClasses)}
         .iconOnly=${!with_label && !content}
         .label=${with_label ? item.label : nothing}
+        @action=${this.onAction}
+        .actionHandler=${actionHandler(this.getActionHandlerOptions())}
       >
         ${pictureUrl ?
     html`<img slot="icon" src=${pictureUrl} aria-hidden />` :

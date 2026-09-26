@@ -5,6 +5,15 @@ interface ColorUiSelector {
   ui_color: {};
 }
 
+interface UiActionSelector {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  ui_action: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    default_action?: string;
+    actions?: string[];
+  };
+}
+
 interface BooleanSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
   boolean: {};
@@ -73,7 +82,8 @@ type Selector =
   NumberSelector |
   SelectSelector |
   BooleanSelector |
-  ColorUiSelector;
+  ColorUiSelector |
+  UiActionSelector;
 
 interface HaDurationData {
   hours?: number;

@@ -1,5 +1,6 @@
 import { css, html, nothing } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { getDateString } from '../../../utils/getDateString';
 import { customElement } from 'lit/decorators.js';
 import { TRASH_CARD_NAME } from '../const';
@@ -8,6 +9,7 @@ import { getColoredStyle } from '../../../utils/getColoredStyle';
 import { BaseItemElement } from './BaseItemElement';
 import { daysTill } from '../../../utils/daysTill';
 import { classMap } from 'lit/directives/class-map.js';
+import { actionHandler } from '../../../utils/actionHandler';
 
 @customElement(`${TRASH_CARD_NAME}-item-card`)
 class ItemCard extends BaseItemElement {
@@ -41,9 +43,20 @@ class ItemCard extends BaseItemElement {
 
     const contentClasses = { vertical: layout === 'vertical' };
 
+    const hasAnyAction = this.hasAnyAction();
+
     return html`
-      <ha-card style=${styleMap(style)} class=${classMap(cssClasses)}>
-        <div class="background" aria-labelledby="info" ></div>
+      <ha-card
+        style=${styleMap(style)}
+        class=${classMap({ ...cssClasses, clickable: hasAnyAction })}
+        role=${ifDefined(hasAnyAction ? 'button' : undefined)}
+        tabindex=${ifDefined(hasAnyAction ? '0' : undefined)}
+        @action=${this.onAction}
+        .actionHandler=${actionHandler(this.getActionHandlerOptions())}
+      >
+        <div class="background" aria-labelledby="info">
+          ${hasAnyAction ? html`<ha-ripple></ha-ripple>` : nothing}
+        </div>
         <div class="container">
           <div class="content ${classMap(contentClasses)}" >
               ${pictureUrl ? this.renderPicture(pictureUrl) : this.renderIcon()}
@@ -90,6 +103,13 @@ class ItemCard extends BaseItemElement {
           border-radius: var(--ha-card-border-radius, 12px);
           margin: calc(-1 * var(--ha-card-border-width, 1px));
           overflow: hidden;
+        }
+        ha-card.clickable {
+          cursor: pointer;
+        }
+        ha-card.clickable:focus-visible {
+          outline: none;
+          box-shadow: 0 0 0 2px var(--tile-color, var(--primary-color));
         }
         .container {
           margin: calc(-1 * var(--ha-card-border-width, 1px));

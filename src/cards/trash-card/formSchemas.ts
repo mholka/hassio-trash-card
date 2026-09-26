@@ -297,6 +297,42 @@ const getSchema = (customLocalize: LocalizeFunc, currentValues: TrashCardConfig,
       []
   ];
 
+  const interactions: HaFormSchema[] = [
+    {
+      name: 'tap_action',
+      label: localize(`ui.panel.lovelace.editor.card.generic.tap_action`),
+      selector: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        ui_action: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          default_action: 'more-info'
+        }
+      }
+    },
+    {
+      name: 'hold_action',
+      label: localize(`ui.panel.lovelace.editor.card.generic.hold_action`),
+      selector: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        ui_action: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          default_action: 'more-info'
+        }
+      }
+    },
+    {
+      name: 'double_tap_action',
+      label: localize(`ui.panel.lovelace.editor.card.generic.double_tap_action`),
+      selector: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        ui_action: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          default_action: 'none'
+        }
+      }
+    }
+  ];
+
   const schema: HaFormSchema[] = [
     {
       name: 'entities',
@@ -320,6 +356,13 @@ const getSchema = (customLocalize: LocalizeFunc, currentValues: TrashCardConfig,
       title: customLocalize('editor.form.tabs.appearance'),
       icon: 'mdi:palette',
       schema: appearance
+    },
+    {
+      type: 'expandable',
+      name: '',
+      title: customLocalize('editor.form.tabs.interactions'),
+      icon: 'mdi:gesture-tap',
+      schema: interactions
     }
   ];
 

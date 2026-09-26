@@ -53,7 +53,8 @@
             "tabs": {
                 "settings": "Einstellungen",
                 "appearance": "Darstellung",
-                "patterns": "Vorlagen"
+                "patterns": "Vorlagen",
+                "interactions": "Interaktionen"
             },
             "refresh_rate": {
                 "title": "Aktualisierungsintervall",
@@ -117,6 +118,7 @@
             "daysleftend": "endet in <DAYS> Tag",
             "daysleftend_more": "endet in <DAYS> Tagen",
             "daysleftend_till": "endet in <DAYS> Tag\num <END> Uhr",
-            "daysleftend_more_till": "endet in <DAYS> Tagen\num <END> Uhr"        }
+            "daysleftend_more_till": "endet in <DAYS> Tagen\num <END> Uhr"
+        }
     }
 }

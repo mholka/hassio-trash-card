@@ -7,6 +7,8 @@ import { defaultHaCardStyle } from '../../../utils/defaultHaCardStyle';
 import { getColoredStyle } from '../../../utils/getColoredStyle';
 import { daysTill } from '../../../utils/daysTill';
 import { BaseItemElement } from './BaseItemElement';
+import { actionHandler } from '../../../utils/actionHandler';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 @customElement(`${TRASH_CARD_NAME}-icon-card`)
 class IconCard extends BaseItemElement<{ nextEvent: boolean }> {
@@ -33,7 +35,8 @@ class IconCard extends BaseItemElement<{ nextEvent: boolean }> {
       tomorrow: daysTillToday === 1,
       another: daysTillToday > 1,
       nextEvent: this.item.nextEvent,
-      futureEvent: !this.item.nextEvent
+      futureEvent: !this.item.nextEvent,
+      clickable: this.hasAnyAction()
     };
 
     const pictureUrl = this.getPictureUrl();
@@ -41,7 +44,15 @@ class IconCard extends BaseItemElement<{ nextEvent: boolean }> {
     this.withBackground = true;
 
     return html`
-      <ha-card style=${styleMap(style)} class=${classMap(cssClasses)}>
+      <ha-card
+        style=${styleMap(style)}
+        class=${classMap(cssClasses)}
+        role=${ifDefined(cssClasses.clickable ? 'button' : undefined)}
+        tabindex=${ifDefined(cssClasses.clickable ? '0' : undefined)}
+        @action=${this.onAction}
+        .actionHandler=${actionHandler(this.getActionHandlerOptions())}
+      >
+          ${cssClasses.clickable ? html`<ha-ripple></ha-ripple>` : nothing}
           <div class="container">
           <div class="content">
           <div class="icon-container">
@@ -67,6 +78,9 @@ class IconCard extends BaseItemElement<{ nextEvent: boolean }> {
         }
         ha-card {
           display: grid;
+        }
+        ha-card.clickable {
+          cursor: pointer;
         }
         .content {
           justify-content: space-around;

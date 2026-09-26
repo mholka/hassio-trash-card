@@ -119,6 +119,9 @@ All the options listed below are available in the lovelace editor, but configuri
 | `icon_size`            | integer | 40 | Size of the icons in px if you choose `card_style` as `icon` . |
 | `with_label`            | boolean | `true` | Option to display the label in the card or chip style. |
 | `pattern`          | array of [Pattern](#pattern)                               | Required    | Pattern to detect the kind of trash and how to display it.|
+| `tap_action`       | [action](https://www.home-assistant.io/dashboards/actions/) | `more-info` | Action to perform when an event is tapped. See [Actions](#actions). |
+| `hold_action`      | [action](https://www.home-assistant.io/dashboards/actions/) | `more-info` | Action to perform when an event is held. |
+| `double_tap_action` | [action](https://www.home-assistant.io/dashboards/actions/) | `none`     | Action to perform when an event is double tapped. |
 
 
 #### Pattern
@@ -202,6 +205,37 @@ pattern:
     color: pink
     type: custom
     pattern: elektro
+```
+
+### Actions
+
+Each displayed event (card, chip or icon) supports the standard Home Assistant
+[actions](https://www.home-assistant.io/dashboards/actions/): `more-info`, `toggle`,
+`navigate`, `url`, `perform-action`, `assist` and `none`. `more-info` and `toggle`
+target the calendar entity the event comes from. Set all three actions to `none`
+to make the events non-interactive.
+
+Example: once the bin is out on collection day, tap the event to switch on a helper,
+then hide the card with a [visibility condition](https://www.home-assistant.io/dashboards/cards/#showing-or-hiding-a-card-conditionally)
+(reset the helper with an automation, e.g. at midnight):
+
+```yaml
+type: custom:trash-card
+entities:
+  - calendar.trash
+tap_action:
+  action: perform-action
+  perform_action: input_boolean.turn_on
+  target:
+    entity_id: input_boolean.trash_bin_out
+  confirmation:
+    text: Bin is out?
+hold_action:
+  action: more-info
+visibility:
+  - condition: state
+    entity: input_boolean.trash_bin_out
+    state: "off"
 ```
 
 ## Icons and Layouts
